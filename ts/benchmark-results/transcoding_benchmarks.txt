@@ -1,0 +1,8 @@
+Transcoding Performance MLT to MVT on OMT Unoptimized Tileset ----------------------------------
+MLT to MVT ratio: 3.054658012062943, MLT time (milliseconds): 396.7952474720297, MVT time: 1212.0737818389339
+Transcoding Performance MLT to MVT on OMT Optimized Tileset ----------------------------------
+MLT to MVT ratio: 1.9771138255113088, MLT time (milliseconds): 280.14621044567014, MVT time: 553.880945836735
+Transcoding Performance MLT to MVT on SwissTopo Tileset ----------------------------------
+MLT to MVT ratio: 2.4637247595395855, MLT time (milliseconds): 258.2344995394847, MVT time: 636.2187302827423
+Transcoding Performance MLT to MVT on Overture Maps Tileset ----------------------------------
+MLT to MVT ratio: 2.9359261135408095, MLT time (milliseconds): 1248.2220680834416, MVT time: 3664.6877651840905

@@ -1,0 +1,4 @@
+Filtering Performance MLT to MVT on OMT Unoptimized Tileset ------------------------------------
+MLT to Mvt ratio: 4.370385881927896, MLT time (milliseconds): 650.9976243574142, MVT time: 2845.1108266602423
+Filtering Performance MLT to MVT on OMT Optimized Tileset ------------------------------------
+MLT to Mvt ratio: 3.693513872791183, MLT time (milliseconds): 31.579200439613583, MVT time: 116.6382149153662

@@ -1,0 +1,10 @@
+**/*.log
+**/.idea/
+**/.vscode/
+**/coverage/
+**/dist/
+**/node_modules/
+**/.gradle/
+**/build/
+**/output/
+**/target/

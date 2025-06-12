@@ -1,0 +1,20 @@
+Sequential Access Performance MLT to MVT on OMT Unoptimized Tileset -----------------------------
+Scaling MLT to MVT ratio: 11.733357483367651
+Sequential Scan VertexBuffer MLT to MVT ratio: 11.438793259025585
+Sequential Scan MLT to MVT ratio: 1.6786728085034976
+Sequential Scan With Ring ClassificationRatio MLT to MVT ratio: 1.9800945169804791
+Sequential Access Performance MLT to MVT on OMT Optimized Tileset -----------------------------
+Scaling MLT to MVT ratio: 1.586090745414983
+Sequential Scan VertexBuffer MLT to MVT ratio: 2.768549087425708
+Sequential Scan MLT to MVT ratio: 1.0658391140025083
+Sequential Scan With Ring ClassificationRatio MLT to MVT ratio: 1.464620963691194
+Sequential Access Performance MLT to MVT on SwissTopo Tileset -----------------------------
+Scaling MLT to MVT ratio: 3.064745305275419
+Sequential Scan VertexBuffer MLT to MVT ratio: 7.0152452965099314
+Sequential Scan MLT to MVT ratio: 1.621946487947507
+Sequential Scan With Ring ClassificationRatio MLT to MVT ratio: 2.1938286134199303
+Sequential Access Performance MLT to MVT on Overture Maps Tileset -----------------------------
+Scaling MLT to MVT ratio: 2.180800046470402
+Sequential Scan VertexBuffer MLT to MVT ratio: 4.687292790408248
+Sequential Scan MLT to MVT ratio: 1.19103294743114
+Sequential Scan With Ring ClassificationRatio MLT to MVT ratio: 11.159023290933641

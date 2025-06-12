@@ -1,0 +1,131 @@
+plugins {
+    id 'java-library'
+    id('com.diffplug.spotless') version '6.25.0'
+    id 'me.champeau.jmh' version '0.7.2'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.ecc.no/releases'
+    }
+}
+
+group 'com.mlt'
+version '0.0.1.0-SNAPSHOT'
+
+def jackson_version = '2.19.0'
+dependencies {
+    implementation 'com.google.protobuf:protobuf-java:3.25.3'
+    implementation 'org.locationtech.jts:jts-core:1.19.0'
+    implementation 'me.lemire.integercompression:JavaFastPFOR:0.2.1'
+    implementation 'com.google.guava:guava:33.2.1-jre'
+    implementation 'commons-cli:commons-cli:1.8.0'
+    implementation 'org.slf4j:slf4j-simple:2.0.13'
+    implementation 'no.ecc.vectortile:java-vector-tile:1.3.23'
+    implementation 'io.github.sebasbaumh:mapbox-vector-tile-java:23.1.0'
+    implementation 'org.apache.orc:orc-core:1.8.1'
+    implementation 'com.github.davidmoten:hilbert-curve:0.2.3'
+    implementation 'com.carrotsearch:hppc:0.10.0'
+    implementation 'io.github.earcut4j:earcut4j:2.2.2'
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    implementation "com.fasterxml.jackson.core:jackson-core:${jackson_version}"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
+    implementation "com.fasterxml.jackson.module:jackson-module-parameter-names:${jackson_version}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.3'
+    testImplementation 'org.openjdk.jmh:jmh-core:1.37 '
+    testImplementation 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
+    testImplementation 'org.xerial:sqlite-jdbc:3.32.3.2'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+    finalizedBy jacocoTestReport
+    maxHeapSize = '4g'
+}
+
+jacocoTestReport {
+    dependsOn test
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+task compileWrapper(type: Exec) {
+    doFirst {
+        if (System.properties['os.name'].toLowerCase().contains('windows')) {
+            executable "./resources/compile-windows.bat"
+        } else {
+            executable "./resources/compile"
+        }
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked"
+    }
+}
+
+//compileJava.dependsOn compileWrapper
+
+["encode", "decode", "meta"].each { name ->
+    task "$name"(type: Jar, dependsOn: compileJava) {
+        archiveFileName = name + ".jar"
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+        manifest.from jar.manifest
+        with jar
+    }
+}
+
+encode.manifest.attributes 'Implementation-Title': 'encode an mlt from an mvt',
+        'Main-Class': 'com.mlt.tools.Encode'
+decode.manifest.attributes 'Implementation-Title': 'decode an mlt',
+        'Main-Class': 'com.mlt.tools.Decode'
+meta.manifest.attributes 'Implementation-Title': 'generate a mltmetadata.pbf file from an mvt',
+        'Main-Class': 'com.mlt.tools.Meta'
+
+task cli {
+    // Uncomment the following line to clear out the jars before rebuilding
+    delete "${buildDir}/libs"
+    dependsOn encode
+    dependsOn decode
+    dependsOn meta
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += [
+            '--add-modules', 'jdk.incubator.vector'
+    ]
+}
+
+tasks.withType(JavaExec) {
+    jvmArgs += "--add-modules=jdk.incubator.vector"
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    jvmArgs += "--add-modules=jdk.incubator.vector"
+}
+
+jmh {
+    jvmArgs.add('--add-modules')
+    jvmArgs.add('jdk.incubator.vector')
+    jvmArgs.add('-Xmx4g')
+}

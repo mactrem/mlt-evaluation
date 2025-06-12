@@ -1,0 +1,319 @@
+ù
+boundary
+id" 
+geometry* 
+admin_level" 
+disputed" 
+maritime" 
+adm8_l" 	
+adm8_r" 	
+adm4_l" 	
+adm4_r" 	˘
+place
+id" 
+geometry* 
+class" 	
+
+feature_id" 
+iso_a2" 	
+rank" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	
+capital" 
+
+population" 
+
+weather_id" ‡
+transportation
+id" 
+geometry* 
+class" 	
+oneway" 
+ramp" 
+surface" 	
+brunnel" 	
+is_route" 
+layer" 
+subclass" 	
+	sac_scale" 	
+service" 	
+api_id" 	F
+	landcover
+id" 
+geometry* 
+class" 	
+subclass" 	∂
+waterway
+id" 
+geometry* 
+class" 	
+intermittent" 
+width" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	0
+water
+id" 
+geometry* 
+class" 	g
+extent
+id" 
+geometry* 
+class" 	
+extent_uuid" 	
+layer" 	
+subclass" 	2
+landuse
+id" 
+geometry* 
+class" 	¥
+
+water_name
+id" 
+geometry* 
+class" 	
+	direction" 
+size" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	Ç
+	area_name
+id" 
+geometry* 
+
+bbox_coord" 	
+class" 	
+extent_uuid" 	
+
+feature_id" 
+subclass" 	
+	direction" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	
+size" Ö
+mountain_peak
+id" 
+geometry* 
+class" 	
+ele" 
+ele_ft" 
+
+feature_id" 
+rank" 
+
+weather_id" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	
+closest_station_id" 	⁄
+park
+id" 
+geometry* 
+class" 	
+
+bbox_coord" 	
+extent_uuid" 	
+
+feature_id" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	
+api_id" Q
+
+bathymetry
+id" 
+geometry* 
+
+lake_depth" 
+lake_depth_ft" Å
+spot_elevation
+id" 
+geometry* 
+class" 	
+ele" 
+ele_ft" 
+
+lake_depth" 
+lake_depth_ft" Â
+aerodrome_label
+id" 
+geometry* 
+class" 	
+closest_station_id" 	
+ele" 
+ele_ft" 
+
+feature_id" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	
+contour_line
+id" 
+geometry* 
+class" 	
+ele" 
+ele_ft" 
+
+lake_depth" 
+lake_depth_ft" ë
+transportation_name
+id" 
+geometry* 
+brunnel" 	
+class" 	
+is_route" 
+layer" 
+ref" 	
+
+ref_length" \
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	
+subclass" 	
+api_id" 	2
+aeroway
+id" 
+geometry* 
+class" 	î
+building_ln
+id" 
+geometry* 
+class" 	\
+name*R 2
+default	2
+
+de	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	4
+	construct
+id" 
+geometry* 
+class" 	Î
+poi
+id" 
+geometry* 
+class" 	
+closest_station_id" 	
+
+feature_id" 
+subclass" 	h
+name*^ 2
+default	2
+
+de	2
+
+en	2
+
+fr	2
+
+it	2
+latin	2
+
+rm	
+api_id" 	
+
+bbox_coord" 	
+
+station_id" 
+	direction" 
+
+weather_id" 
+station_stop_id" 
+station_area_id" e
+building
+id" 
+geometry* 
+class" 	
+render_height" 
+render_min_height" j
+contour_line_pt
+id" 
+geometry* 
+class" 	
+	direction" 
+ele" 
+ele_ft" C
+shortest_path
+id" 
+geometry* 
+shortest_path_id" <
+housenumber
+id" 
+geometry* 
+housenumber" 	I
+landcover_pt
+id" 
+geometry* 
+class" 	
+subclass" 	
