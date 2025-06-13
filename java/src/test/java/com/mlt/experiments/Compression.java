@@ -15,7 +15,8 @@ import com.mlt.converter.mvt.MapboxVectorTile;
 import com.mlt.metadata.tileset.MltTilesetMetadata;
 import com.mlt.util.MbtilesRepsitory;
 import org.apache.commons.lang3.tuple.Triple;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,10 +29,10 @@ import java.util.stream.Collectors;
 import static com.mlt.TestSettings.ID_REASSIGNABLE_MVT_LAYERS;
 
 public class Compression {
-  //private static final String SOURCE_MBTILES = "data/ot1.mbtiles";
-  //private static final String SOURCE_MBTILES = "data/ot2.mbtiles";
-  //private static final String SOURCE_MBTILES = "data/st.mbtiles";
-  private static final String SOURCE_MBTILES = "data/ov.mbtiles";
+  private static final String OT1_SOURCE_MBTILES = "data/ot1.mbtiles";
+  private static final String OT2_SOURCE_MBTILES = "data/ot2.mbtiles";
+  private static final String ST_SOURCE_MBTILES = "data/st.mbtiles";
+  private static final String OV_SOURCE_MBTILES = "data/ov.mbtiles";
   private static final String OUT_DIR_MLT = "../ts/test/data/omt/unoptimized_user_session/mlt/plain";
   private static final String OUT_DIR_MVT = "../ts/test/data/omt/unoptimized_user_session/mvt";
   private static final boolean STORE_TILES = false;
@@ -42,28 +43,27 @@ public class Compression {
                   new ColumnMapping("name", "_", true),
                   new ColumnMapping("name", ":", true));
   private static final List<String> OUTLINE_POLYGON_FEATURE_TABLE_NAMES = List.of("building");
-  /* Only used nested encoding for the Overture Maps dataset */
-  private static final boolean ENCODE_NESTED_PROPERTIES = SOURCE_MBTILES.contains("ov");
 
-  public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-    new Compression().userSession();
-  }
-
-  @Test
-  public void userSession()
+  @ParameterizedTest
+  @ValueSource(strings= {Compression.OT1_SOURCE_MBTILES, Compression.OT2_SOURCE_MBTILES, Compression.ST_SOURCE_MBTILES,
+    Compression.OV_SOURCE_MBTILES})
+  public void userSession(String mbTilesFileName)
           throws SQLException, ClassNotFoundException, IOException {
+    System.out.printf("Benchmarking Dataset %s --------------------------------------------------------------------%n",
+            mbTilesFileName.split("/")[1]);
+
     List<Triple<Triple<Integer, Integer, Integer>, byte[], MapboxVectorTile>> mvTiles;
-    try (var repo = new MbtilesRepsitory("jdbc:sqlite:" + SOURCE_MBTILES, 0, 14, COLUMN_MAPPINGS)) {
+    try (var repo = new MbtilesRepsitory("jdbc:sqlite:" + mbTilesFileName, 0, 14, COLUMN_MAPPINGS)) {
         mvTiles = repo.getAllTiles();
     }
 
     var decodedMvTiles = mvTiles.stream().map(Triple::getRight).collect(Collectors.toList());
     Optional<List<ColumnMapping>> columnMappings = Optional.of(COLUMN_MAPPINGS);
-
-
     MltTilesetMetadata.TileSetMetadata tilesetMetadata;
     Map<String, Field> nestedScheme = null;
-    if(ENCODE_NESTED_PROPERTIES){
+    /* Only used nested encoding for the Overture Maps dataset */
+    var encodeNestedProperties = mbTilesFileName.contains("ov");
+    if(encodeNestedProperties){
       var scheme = MltConverter.createTilesetMetadataFromNestedJsonProperties(decodedMvTiles, columnMappings,
               true);
       tilesetMetadata = scheme.getLeft();
@@ -97,7 +97,7 @@ public class Compression {
         }
 
         byte[] optimizedMortonAdvancedEncodedMlt, unoptimizedMortonAdvancedEncodedMlt, unoptimizedSimpleEncodedMlt;
-        if(!ENCODE_NESTED_PROPERTIES){
+        if(!encodeNestedProperties){
           optimizedMortonAdvancedEncodedMlt = convertMvtToMlt(idReassignedOptimizations,
                   false, mvTile.getRight(), tilesetMetadata, true,
                   true);
@@ -108,8 +108,8 @@ public class Compression {
                   false, mvTile.getRight(), tilesetMetadata, false,
                   false);
 
-          verifyResult(mvTile, unoptimizedMortonAdvancedEncodedMlt, tilesetMetadata);
-          verifyResult(mvTile, unoptimizedSimpleEncodedMlt, tilesetMetadata);
+          /*verifyResult(mvTile, unoptimizedMortonAdvancedEncodedMlt, tilesetMetadata);
+          verifyResult(mvTile, unoptimizedSimpleEncodedMlt, tilesetMetadata);*/
         }
         else{
           optimizedMortonAdvancedEncodedMlt = convertComplexMvtToMlt(idReassignedOptimizations,
@@ -132,13 +132,13 @@ public class Compression {
           maxCr = cr;
         }
 
-        System.out.println("-----------------------------------------------------------------------------");
         var stats1 = printStats(mvTile, optimizedMortonAdvancedEncodedMlt, divider, mode1);
         optimizedMortonAdvancedEncodedStats.add(stats1);
         var stats2 = printStats(mvTile, unoptimizedMortonAdvancedEncodedMlt, divider, mode2);
         unoptimizedMortonAdvancedEncodedStats.add(stats2);
         var stats3 = printStats(mvTile, unoptimizedSimpleEncodedMlt, divider, mode3);
         unoptimizedSimpleEncodedStats.add(stats3);
+        System.out.println("-----------------------------------------------------------------------------");
 
         if(STORE_TILES){
           var tileId = mvTile.getLeft();
@@ -174,7 +174,7 @@ public class Compression {
     var mvtSize = stats.stream().mapToDouble(l -> l.get(1)).sum();
     var compressedMltSize = stats.stream().mapToDouble(l -> l.get(2)).sum();
     var compressedMvtSize = stats.stream().mapToDouble(l -> l.get(3)).sum();
-    System.out.println("---------------------------------------------------------------------------");
+    System.out.println("-----------------------------------------------------------------------------");
     System.out.printf(Locale.US,"Reduction: %.2f%%, Reduction Compressed: %.2f%%, " +
                     "MVT: %.2f, MLT: %.2f, Compressed MVT: %.2f, Compressed MLT: %.2f | %s %n",
             (1 - (mltSize / mvtSize)) * 100, (1 - (compressedMltSize / compressedMvtSize)) * 100

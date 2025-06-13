@@ -1,15 +1,30 @@
+# maplibre-tile-spec
 
-> **_Notice:_** This experimental Java encoder uses the [FSST](https://www.vldb.org/pvldb/vol13/p2649-boncz.pdf) encoding for efficiently encoding
-substrings of a tile. In the current research state only a quick solution has been implemented, with the restrication that only a windows build
-> of the [FSST project](https://github.com/cwida/fsst) is available.
+This project contains a Java converter and decoder for the MapLibre Tile (MLT) vector tile format.
 
-Generate Java metadata classes from ``maplibre_tile_metdata.proto`` file:
-```console
-protoc --java_out=src/main/java -I "..\..\spec\schema" mlt_tileset_metadata.proto
-```
+## Preparing the Environment
 
-To use the polygon pre-tessellation feature currently a separate Node.js application has to be started in the
-tessellation directory via
-```console
-npm run serve
-```
+Install a current version (>= 21) of Java.
+
+To build the project run the following command:
+````bash
+./gradlew assemble
+````
+
+Since the OvertureMaps dataset is to large to 
+
+To run the encoding and compression benchmarks run:
+````bash
+./gradlew test --tests com.mlt.experiments.Compression
+````
+
+Benchmark Variants:
+- Advanced Morton Encodings, ID Reassigned, No Pre-Tessellation: Uses advanced encodings such FastPfor, FSST and 
+  Morton Vertex-Dictionary encoding and uses some optimization of the existing MVT dataset to additionally reduce the 
+  size like id regeneration (without information loss) in some cases and sorting of the features
+- Advanced Morton Encodings, No Optimization, No Pre-Tessellation: Uses advanced encodings but does not additionally 
+  process the dataset
+- Simple Encodings, No Optimization, No Pre-Tessellation: Uses only simple encodings, so these encodings which are 
+  currently supported by the TypeScript decoder since the advanced encodings are currently only supported by the 
+  Java decoder
+

@@ -71,7 +71,7 @@ public class TestUtils {
             var mvtStringProperties =
                 mvtProperties.entrySet().stream()
                     .filter(
-                        p -> p.getKey().contains(mltPropertyKey) && p.getValue() instanceof String)
+                        p -> p.getKey().startsWith(mltPropertyKey) && p.getValue() instanceof String)
                     .toList();
             for (var mvtProperty : mvtStringProperties) {
               var mvtPropertyKey = mvtProperty.getKey();
