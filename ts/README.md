@@ -30,3 +30,5 @@ Running the filtering benchmarks
 npm run benchmark:filering
 ```
 
+The benchmarking results are stored in separate files in the dist folder.
+

@@ -108,6 +108,7 @@ public class Compression {
                   false, mvTile.getRight(), tilesetMetadata, false,
                   false);
 
+          /* Verification of the flat encoded MLT files happens in the unit tests of the TS decoder */
           /*verifyResult(mvTile, unoptimizedMortonAdvancedEncodedMlt, tilesetMetadata);
           verifyResult(mvTile, unoptimizedSimpleEncodedMlt, tilesetMetadata);*/
         }
@@ -122,6 +123,7 @@ public class Compression {
                   false, mvTile.getRight(), tilesetMetadata, false,
                   false, nestedScheme);
 
+          /* Verification of the nested encoded datasets */
           verifyResult(mvTile, unoptimizedMortonAdvancedEncodedMlt, tilesetMetadata, nestedScheme);
           verifyResult(mvTile, unoptimizedSimpleEncodedMlt, tilesetMetadata, nestedScheme);
         }
@@ -174,7 +176,7 @@ public class Compression {
     var mvtSize = stats.stream().mapToDouble(l -> l.get(1)).sum();
     var compressedMltSize = stats.stream().mapToDouble(l -> l.get(2)).sum();
     var compressedMvtSize = stats.stream().mapToDouble(l -> l.get(3)).sum();
-    System.out.println("-----------------------------------------------------------------------------");
+    System.out.println("Overall Statistics --------------------------------------------------------------------------");
     System.out.printf(Locale.US,"Reduction: %.2f%%, Reduction Compressed: %.2f%%, " +
                     "MVT: %.2f, MLT: %.2f, Compressed MVT: %.2f, Compressed MLT: %.2f | %s %n",
             (1 - (mltSize / mvtSize)) * 100, (1 - (compressedMltSize / compressedMvtSize)) * 100

@@ -8,7 +8,7 @@ import fs from "fs";
 import os from "os";
 import Path from "path";
 
-/* These benchmarks are testing the transcoding performance of MLT and MVT.
+/* These benchmarks are testing the decoding (transcoding) performance of MLT and MVT.
  * We test different variations of the MVT decoding library.
  * The verification of the correct transcoding of MLT and MVT is done in the unit tests (mltDecoder.spec.ts) .*/
 
