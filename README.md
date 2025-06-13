@@ -6,8 +6,7 @@ the state-of-the-art vector tile format [Mapbox Vector Tile (MVT)](https://githu
 three different categories:
 - Encoding & Compression Performance: the size of the formats, both encoded and compressed
 - Decoding (Transcoding) Performance: the performance of decoding the encoded formats into their respective in-memory representations
-- Data Access Performance: data access micro-benchmarks concerning the performance of common data access patterns on in-memory representations in 
-- map rendering workflows such as applying filtering operations
+- Data Access Performance: data access micro-benchmarks concerning the performance of common data access patterns on in-memory representations im map rendering workflows such as applying filtering operations
 
 ##  Experiments
 

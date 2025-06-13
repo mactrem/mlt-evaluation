@@ -343,13 +343,15 @@ an auxiliary buffer containing offset values will be utilized.
 
 The MLT in-memory format supports the following vectors:
 
-- [Flat Vectors](https://duckdb.org/internals/vector.html#flat-vectors)
-- [Constant Vectors](https://duckdb.org/internals/vector.html#constant-vectors)
-- [Sequence Vectors](https://duckdb.org/internals/vector.html#sequence-vectors)
-- [Dictionary Vectors](https://duckdb.org/internals/vector.html#dictionary-vectors)
-- FSST Dictionary Vectors
-- Shared Dictionary Vectors
-- [Run-End Encoded (REE) Vectors](https://arrow.apache.org/docs/format/Columnar.html#run-end-encoded-layout)
+- FlatVector
+- LazyVector
+- ConstVector
+- Sequence Vector
+- DictionaryVector
+- FSSTDictionaryVector
+- SharedDictionaryVector
+- GeometryVector
+- GPUVector
 
 > **_Note:_** Further evaluation is needed to determine if the [latest research findings](https://arxiv.org/pdf/2306.15374.pdf)
 > can be used to enable random access on delta encoded values as well
