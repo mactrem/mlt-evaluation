@@ -11,7 +11,7 @@ To build the project run the following command:
 ./gradlew assemble
 ````
 
-Since the OvertureMaps dataset is to large to 
+## Running the benchmarks
 
 To run the encoding and compression benchmarks run:
 ````bash
@@ -20,11 +20,11 @@ To run the encoding and compression benchmarks run:
 
 Benchmark Variants:
 - Advanced Morton Encodings, ID Reassigned, No Pre-Tessellation: Uses advanced encodings such FastPfor, FSST and 
-  Morton Vertex-Dictionary encoding and uses some optimization of the existing MVT dataset to additionally reduce the 
-  size like id regeneration (without information loss) in some cases and sorting of the features
+  Morton Vertex-Dictionary encoding in combination with optimizations on the existing MVT dataset to additionally 
+  reduce the size such as in some case id regeneration (without information loss) and sorting of the features
 - Advanced Morton Encodings, No Optimization, No Pre-Tessellation: Uses advanced encodings but does not additionally 
   process the dataset
-- Simple Encodings, No Optimization, No Pre-Tessellation: Uses only simple encodings, so these encodings which are 
+- Simple Encodings, No Optimization, No Pre-Tessellation: Uses only simple encodings. These encodings are 
   currently supported by the TypeScript decoder since the advanced encodings are currently only supported by the 
   Java decoder
 
