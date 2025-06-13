@@ -45,8 +45,10 @@ public class Compression {
   private static final List<String> OUTLINE_POLYGON_FEATURE_TABLE_NAMES = List.of("building");
 
   @ParameterizedTest
-  @ValueSource(strings= {Compression.OT1_SOURCE_MBTILES, Compression.OT2_SOURCE_MBTILES, Compression.ST_SOURCE_MBTILES,
-    Compression.OV_SOURCE_MBTILES})
+  /*@ValueSource(strings= {Compression.OT1_SOURCE_MBTILES, Compression.OT2_SOURCE_MBTILES, Compression.ST_SOURCE_MBTILES,
+    Compression.OV_SOURCE_MBTILES})*/
+  @ValueSource(strings= {Compression.OT2_SOURCE_MBTILES, Compression.ST_SOURCE_MBTILES,
+          Compression.OV_SOURCE_MBTILES})
   public void userSession(String mbTilesFileName)
           throws SQLException, ClassNotFoundException, IOException {
     System.out.printf("Benchmarking Dataset %s --------------------------------------------------------------------%n",

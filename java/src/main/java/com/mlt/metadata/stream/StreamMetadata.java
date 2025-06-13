@@ -62,39 +62,47 @@ public class StreamMetadata {
   }
 
   public static StreamMetadata decode(byte[] tile, IntWrapper offset) {
-    var streamType = tile[offset.get()];
-    var physicalStreamType = PhysicalStreamType.values()[streamType >> 4];
-    LogicalStreamType logicalStreamType = null;
-    switch (physicalStreamType) {
-      case DATA:
-        logicalStreamType = new LogicalStreamType(DictionaryType.values()[streamType & 0xf]);
-        break;
-      case OFFSET:
-        logicalStreamType = new LogicalStreamType(OffsetType.values()[streamType & 0xf]);
-        break;
-      case LENGTH:
-        logicalStreamType = new LogicalStreamType(LengthType.values()[streamType & 0xf]);
-        break;
-    }
-    offset.increment();
+      var streamType = tile[offset.get()];
 
-    var encodingsHeader = tile[offset.get()] & 0xFF;
-    var logicalLevelTechnique1 = LogicalLevelTechnique.values()[encodingsHeader >> 5];
-    var logicalLevelTechnique2 = LogicalLevelTechnique.values()[encodingsHeader >> 2 & 0x7];
-    var physicalLevelTechnique = PhysicalLevelTechnique.values()[encodingsHeader & 0x3];
-    offset.increment();
-    var sizeInfo = DecodingUtils.decodeVarint(tile, offset, 2);
-    var numValues = sizeInfo[0];
-    var byteLength = sizeInfo[1];
+      PhysicalStreamType physicalStreamType = null;
+      try{
+        physicalStreamType = PhysicalStreamType.values()[streamType >> 4];
+      }
+      catch (Exception e){
+        return null;
+      }
 
-    return new StreamMetadata(
-        physicalStreamType,
-        logicalStreamType,
-        logicalLevelTechnique1,
-        logicalLevelTechnique2,
-        physicalLevelTechnique,
-        numValues,
-        byteLength);
+      LogicalStreamType logicalStreamType = null;
+      switch (physicalStreamType) {
+        case DATA:
+          logicalStreamType = new LogicalStreamType(DictionaryType.values()[streamType & 0xf]);
+          break;
+        case OFFSET:
+          logicalStreamType = new LogicalStreamType(OffsetType.values()[streamType & 0xf]);
+          break;
+        case LENGTH:
+          logicalStreamType = new LogicalStreamType(LengthType.values()[streamType & 0xf]);
+          break;
+      }
+      offset.increment();
+
+      var encodingsHeader = tile[offset.get()] & 0xFF;
+      var logicalLevelTechnique1 = LogicalLevelTechnique.values()[encodingsHeader >> 5];
+      var logicalLevelTechnique2 = LogicalLevelTechnique.values()[encodingsHeader >> 2 & 0x7];
+      var physicalLevelTechnique = PhysicalLevelTechnique.values()[encodingsHeader & 0x3];
+      offset.increment();
+      var sizeInfo = DecodingUtils.decodeVarint(tile, offset, 2);
+      var numValues = sizeInfo[0];
+      var byteLength = sizeInfo[1];
+
+      return new StreamMetadata(
+              physicalStreamType,
+              logicalStreamType,
+              logicalLevelTechnique1,
+              logicalLevelTechnique2,
+              physicalLevelTechnique,
+              numValues,
+              byteLength);
   }
 
   public PhysicalStreamType physicalStreamType() {

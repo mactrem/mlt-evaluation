@@ -1,6 +1,6 @@
 # maplibre-tile-spec
 
-This project contains a Java converter and decoder for the MapLibre Tile (MLT) vector tile format.
+This project contains a Java encoder and decoder for the MapLibre Tile (MLT) vector tile format.
 
 ## Preparing the Environment
 

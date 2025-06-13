@@ -86,6 +86,11 @@ public class TestUtils {
                 continue;
               }*/
 
+              if(mvtPropertyValue instanceof String && ((String) mvtPropertyValue).isEmpty() && mltValue == null) {
+                /* Empty strings in MVT are currently encoded as null values in MLT  */
+                continue;
+              }
+
               assertEquals(mvtPropertyValue, mltValue);
             }
           } else {

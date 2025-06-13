@@ -1,6 +1,5 @@
 # MapLibre Tile (MLT) Format Evaluation
 
-
 This repository contains code and data for an experimental evaluation comparing the MLT format to 
 the state-of-the-art vector tile format [Mapbox Vector Tile (MVT)](https://github.com/mapbox/vector-tile-spec) across 
 three different categories:
