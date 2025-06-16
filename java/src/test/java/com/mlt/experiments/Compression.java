@@ -45,10 +45,8 @@ public class Compression {
   private static final List<String> OUTLINE_POLYGON_FEATURE_TABLE_NAMES = List.of("building");
 
   @ParameterizedTest
-  /*@ValueSource(strings= {Compression.OT1_SOURCE_MBTILES, Compression.OT2_SOURCE_MBTILES, Compression.ST_SOURCE_MBTILES,
-    Compression.OV_SOURCE_MBTILES})*/
-  @ValueSource(strings= {Compression.OT2_SOURCE_MBTILES, Compression.ST_SOURCE_MBTILES,
-          Compression.OV_SOURCE_MBTILES})
+  @ValueSource(strings= {Compression.OT1_SOURCE_MBTILES, Compression.OT2_SOURCE_MBTILES, Compression.ST_SOURCE_MBTILES,
+    Compression.OV_SOURCE_MBTILES})
   public void userSession(String mbTilesFileName)
           throws SQLException, ClassNotFoundException, IOException {
     System.out.printf("Benchmarking Dataset %s --------------------------------------------------------------------%n",
@@ -109,10 +107,7 @@ public class Compression {
           unoptimizedSimpleEncodedMlt = convertMvtToMlt(noOptimizations,
                   false, mvTile.getRight(), tilesetMetadata, false,
                   false);
-
           /* Verification of the flat encoded MLT files happens in the unit tests of the TS decoder */
-          /*verifyResult(mvTile, unoptimizedMortonAdvancedEncodedMlt, tilesetMetadata);
-          verifyResult(mvTile, unoptimizedSimpleEncodedMlt, tilesetMetadata);*/
         }
         else{
           optimizedMortonAdvancedEncodedMlt = convertComplexMvtToMlt(idReassignedOptimizations,
