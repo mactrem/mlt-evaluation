@@ -153,8 +153,8 @@ public class MltDecoder {
           }
 
           var propertyVector =
-              VectorizedPropertyDecoder.decodeToRandomAccessFormat(
-                  tile, offset, columnMetadata, numStreams, numFeatures);
+                  VectorizedPropertyDecoder.decodeToRandomAccessFormat(
+                          tile, offset, columnMetadata, numStreams, numFeatures);
           if (propertyVector != null) {
             propertyVectors.add(propertyVector);
           }

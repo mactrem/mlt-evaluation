@@ -107,7 +107,9 @@ public class Compression {
           unoptimizedSimpleEncodedMlt = convertMvtToMlt(noOptimizations,
                   false, mvTile.getRight(), tilesetMetadata, false,
                   false);
-          /* Verification of the flat encoded MLT files happens in the unit tests of the TS decoder */
+
+          /* Verification of the simple flat encoded MLT files happens in the unit tests of the TS decoder */
+          verifyResult(mvTile, unoptimizedMortonAdvancedEncodedMlt, tilesetMetadata);
         }
         else{
           optimizedMortonAdvancedEncodedMlt = convertComplexMvtToMlt(idReassignedOptimizations,
