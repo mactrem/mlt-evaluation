@@ -162,6 +162,13 @@ public class VectorizedDecodingUtils {
 
     b = src[offset++];
     value |= (b & 0x7f) << 21;
+    if ((b & 0x80) == 0) {
+      dst[dstOffset] = value;
+      return offset;
+    }
+
+    b = src[offset++];
+    value |= (b & 0x7f) << 28;
     dst[dstOffset] = value;
     return offset;
   }

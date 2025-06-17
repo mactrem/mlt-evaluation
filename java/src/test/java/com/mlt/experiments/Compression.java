@@ -108,8 +108,8 @@ public class Compression {
                   false, mvTile.getRight(), tilesetMetadata, false,
                   false);
 
-          /* Verification of the simple flat encoded MLT files happens in the unit tests of the TS decoder */
           verifyResult(mvTile, unoptimizedMortonAdvancedEncodedMlt, tilesetMetadata);
+          verifyResult(mvTile, unoptimizedSimpleEncodedMlt, tilesetMetadata);
         }
         else{
           optimizedMortonAdvancedEncodedMlt = convertComplexMvtToMlt(idReassignedOptimizations,

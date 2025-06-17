@@ -111,10 +111,6 @@ public class MvtUtils {
         // TODO: quick and dirty -> implement generic
         var transformedProperties = transformNestedPropertyNames(properties, columnMappings);
 
-        /*if(mvtFeature.getId() < 0){
-          System.out.println("Invalid id");
-        }*/
-
         var feature =
             new Feature(mvtFeature.getId(), mvtFeature.getGeometry(), transformedProperties);
         features.add(feature);

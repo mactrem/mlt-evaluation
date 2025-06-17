@@ -1,7 +1,7 @@
 This folder contains micro-benchmarks related to the MapLibre Tile format.
 
 ### Use Case
-Simulating user interactions with map applications, by zooming from zoom level 0 to 18 (14) into a POI in a major 
+For benchmarking, tiles were selected by simulating user interactions with map applications, by zooming from zoom level 0 to 18 (14) into a POI in a major 
 european city
 
 ### Datasets

@@ -257,16 +257,16 @@ public class MltDecoder {
     var idDataStreamMetadata = StreamMetadataDecoder.decode(tile, offset);
     var idDataType = columnMetadata.getScalarType().getPhysicalType();
     var vectorType = VectorizedDecodingUtils.getVectorType(idDataStreamMetadata, nullabilityBuffer.size());
-    if (idDataType.equals(MltTilesetMetadata.ScalarType.UINT_32)) {
+    if (idDataType.equals(MltTilesetMetadata.ScalarType.UINT_32) ||
+            idDataType.equals(MltTilesetMetadata.ScalarType.INT_32)) {
       // TODO: add support for const vector type -> but should not be allowed in id column
+      var isSigned = idDataType.equals(MltTilesetMetadata.ScalarType.INT_32);
       if (vectorType.equals(VectorType.FLAT)) {
         var id =
-            VectorizedIntegerDecoder.decodeIntStream(tile, offset, idDataStreamMetadata, false);
+            VectorizedIntegerDecoder.decodeIntStream(tile, offset, idDataStreamMetadata, isSigned);
         return new IntFlatVector(columnName, nullabilityBuffer, id);
       } else if (vectorType.equals(VectorType.CONST)) {
-        var id =
-            VectorizedIntegerDecoder.decodeConstIntStream(
-                tile, offset, idDataStreamMetadata, false);
+        var id = VectorizedIntegerDecoder.decodeConstIntStream(tile, offset, idDataStreamMetadata, isSigned);
         return new IntConstVector(columnName, nullabilityBuffer, id);
       } else if (vectorType.equals(VectorType.SEQUENCE)) {
         var id =
@@ -281,14 +281,13 @@ public class MltDecoder {
       }
     } else {
       // TODO: add support for const vector type -> but should not be allowed in id column
+      var isSigned = idDataType.equals(MltTilesetMetadata.ScalarType.INT_64);
       if (vectorType.equals(VectorType.FLAT)) {
-        var id =
-            VectorizedIntegerDecoder.decodeLongStream(tile, offset, idDataStreamMetadata, false);
+        var id = VectorizedIntegerDecoder.decodeLongStream(tile, offset, idDataStreamMetadata, isSigned);
         return new LongFlatVector(columnName, nullabilityBuffer, id);
       } else if (vectorType.equals(VectorType.CONST)) {
         var id =
-            VectorizedIntegerDecoder.decodeConstLongStream(
-                tile, offset, idDataStreamMetadata, false);
+            VectorizedIntegerDecoder.decodeConstLongStream(tile, offset, idDataStreamMetadata, isSigned);
         return new LongConstVector(columnName, nullabilityBuffer, id);
       } else if (vectorType.equals(VectorType.SEQUENCE)) {
         var id =

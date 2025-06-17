@@ -256,6 +256,7 @@ public class MltConverter {
         /* Create the scheme for the property columns by iterating over all features in the tile and collecting
          * information about the feature properties*/
         var isLongId = false;
+        var isIdSigned = false;
         for (var feature : layer.features()) {
           /* sort so that the name of the parent column comes first before the nested fields as it has to be the shortest */
           // TODO: refactor
@@ -345,9 +346,13 @@ public class MltConverter {
                     && (feature.id() > Integer.MAX_VALUE || feature.id() < Integer.MIN_VALUE)) {
               isLongId = true;
             }
+
+            if(isIdPresent && feature.id() < 0) {
+              isIdSigned = true;
+            }
           }
 
-          if (isIdPresent && (!featureTableScheme.containsKey(ID_COLUMN_NAME))
+        if (isIdPresent && (!featureTableScheme.containsKey(ID_COLUMN_NAME))
                   || (isLongId
                   && featureTableScheme.get(ID_COLUMN_NAME).getScalarType().getPhysicalType()
                   != MltTilesetMetadata.ScalarType.INT_64)) {
@@ -357,13 +362,13 @@ public class MltConverter {
              * */
             var idDataType =
                     isLongId
-                            ? MltTilesetMetadata.ScalarType.UINT_64
-                            : MltTilesetMetadata.ScalarType.UINT_32;
+                            ? (isIdSigned? MltTilesetMetadata.ScalarType.INT_64 : MltTilesetMetadata.ScalarType.UINT_64)
+                            : (isIdSigned? MltTilesetMetadata.ScalarType.INT_32 : MltTilesetMetadata.ScalarType.UINT_32);
             var idMetadata = createScalarColumnScheme(ID_COLUMN_NAME, false, idDataType);
             featureTableScheme.put(ID_COLUMN_NAME, idMetadata);
-          }
         }
       }
+    }
 
       for (var complexPropertyColumnSchemeLayer : complexPropertyColumnSchemesContainer.entrySet()) {
         for (var complexPropertyColumnScheme :

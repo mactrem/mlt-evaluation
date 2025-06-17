@@ -31,8 +31,8 @@ Benchmark Variants:
 
 ## Methodology
 ### Use Case
-Simulating user interactions with map applications, by zooming from zoom level 0 to 18 (14) into a POI in a major 
-european city  
+For benchmarking, tiles were selected by simulating user interactions with map applications, by zooming from zoom level 0 to 18 (14) into a POI in a major
+european city
   
 ### Datasets
 - [OpenMapTiles unoptimized (OT1)](https://github.com/onthegomap/planetiler): with an earlier version of planetiler (0.6.0) generated OMT tileset which is less optimized
